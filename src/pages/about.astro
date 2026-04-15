@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const timeline = [
+  { year: '2017-2021', event: '同济大学 工学学士（工业工程）', detail: 'GPA 4.29/5.00，综评第一，国家奖学金，上海市优秀毕业生' },
+  { year: '2021-2024', event: '同济大学 机械硕士（工业工程）', detail: 'GPA 4.64/5.00，推荐免试，一作 EI 论文（启发式算法解决 NP-hard 问题）' },
+  { year: '2023.10-至今', event: '成都博源投资 投资经理', detail: '主导 8 个项目（1.6 亿+），2 个委派董事席位，访谈 300+ 创始人' },
+  { year: '2025.09-至今', event: '某互联网大厂 数据专家（兼职）', detail: '金融场景数据标注，多轮推理与工具调用，理解什么是好数据' },
+];
+---
+
+<BaseLayout title="关于我 - 梁啸雨" description="梁啸雨的个人介绍与简历">
+  <div style="max-width: 720px;">
+    <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: var(--spacing-2xl);">关于我</h1>
+
+    <section style="margin-bottom: var(--spacing-2xl);">
+      <p style="font-size: 1rem; line-height: 1.8; color: var(--color-text-secondary);">
+        同济机械工程硕士，VC 投资经理，正在转型AI。
+      </p>
+      <p style="font-size: 1rem; line-height: 1.8; color: var(--color-text-secondary);">
+        投资经历让我练就了两项核心能力：
+      </p>
+      <ul style="font-size: 0.925rem; line-height: 1.8; color: var(--color-text-secondary); padding-left: var(--spacing-lg); margin-bottom: var(--spacing-md);">
+        <li><strong style="color: var(--color-text);">在信息不完整、环境快速变化的条件下，用结构化方法识别什么是真需求。</strong>访谈 300+ 创始人、主导 8 个项目（1.6 亿+）的实战积累。</li>
+        <li><strong style="color: var(--color-text);">作为 Project Owner 推动复杂项目落地。</strong>在高度不确定的环境下，协调拟投创始人、高管、行业专家、机构以及合伙人、法务、财务、风控，对齐各方预期，把宏大目标拆解、推进、交付。</li>
+      </ul>
+      <p style="font-size: 1rem; line-height: 1.8; color: var(--color-text-secondary);">
+        从 VC 到 AI 产品实践，始终围绕两件事：
+      </p>
+      <ul style="font-size: 0.925rem; line-height: 1.8; color: var(--color-text-secondary); padding-left: var(--spacing-lg); margin-bottom: var(--spacing-md);">
+        <li><strong style="color: var(--color-text);">亲手构建 AI 产品。</strong>4 个项目从 0 到 1，从论文解析到 Agent 记忆架构，始终在追问：AI 能让什么不可能变成可能？</li>
+        <li><strong style="color: var(--color-text);">提炼产品方法论。</strong>AI-Native 产品的核心是——产品层以意图替代指令，技术层以智能替代规则。长期看，模型满足的新需求比提效更有价值。</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: var(--spacing-2xl);">
+      <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--spacing-lg);">经历时间线</h2>
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
+        {timeline.map((item) => (
+          <div style="display: flex; gap: var(--spacing-lg);">
+            <span style="font-size: 0.75rem; color: var(--color-text-secondary); min-width: 80px; padding-top: 0.25rem;">{item.year}</span>
+            <div style="border-left: 2px solid var(--color-border); padding-left: var(--spacing-md);">
+              <p style="font-size: 0.925rem; font-weight: 600; margin-bottom: var(--spacing-xs);">{item.event}</p>
+              <p style="font-size: 0.8rem; color: var(--color-text-secondary); margin: 0;">{item.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <p style="font-size: 1rem; line-height: 1.8; color: var(--color-accent); text-align: center; margin-bottom: var(--spacing-2xl); font-weight: 700;">
+      强烈的好奇心与自驱力，希望全面拥抱 AI——不是旁观趋势，而是亲手构建。
+    </p>
+
+    <section style="margin-bottom: var(--spacing-2xl);">
+      <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--spacing-lg);">联系方式</h2>
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">
+          <strong>手机：</strong>17721056630
+        </p>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">
+          <strong>邮箱：</strong><a href="mailto:17721056630@163.com">17721056630@163.com</a>
+        </p>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">
+          <strong>GitHub：</strong><a href="https://github.com/Jason99666" target="_blank" rel="noopener noreferrer">github.com/Jason99666</a>
+        </p>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">
+          <strong>公众号：</strong>碳基手记
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-bottom: var(--spacing-2xl); padding: var(--spacing-xl); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); text-align: center;">
+      <p style="font-size: 1rem; font-weight: 500; margin-bottom: var(--spacing-md);">下载简历 PDF</p>
+      <a href="/resume.pdf" class="btn btn-primary" download>
+        下载简历
+      </a>
+    </section>
+  </div>
+</BaseLayout>

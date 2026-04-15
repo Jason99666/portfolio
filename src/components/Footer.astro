@@ -1,0 +1,24 @@
+---
+const links = [
+  { href: 'https://github.com/Jason99666', label: 'GitHub' },
+  { href: 'mailto:17721056630@163.com', label: '邮箱' },
+];
+---
+
+<footer style="border-top: 1px solid var(--color-border); background: var(--color-surface);">
+  <div class="container" style="padding: var(--spacing-md) 0; display: flex; align-items: center; justify-content: center; gap: var(--spacing-lg);">
+    {links.map((link) => (
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        style="font-size: 0.875rem; color: var(--color-text-secondary);"
+      >
+        {link.label}
+      </a>
+    ))}
+    <span style="font-size: 0.75rem; color: var(--color-text-secondary);">
+      &copy; {new Date().getFullYear()} 梁啸雨. 公众号「碳基手记」
+    </span>
+  </div>
+</footer>

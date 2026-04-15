@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="项目展示 - 梁啸雨" description="AI 项目作品集展示">
+  <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: var(--spacing-2xl);">项目展示</h1>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--spacing-lg);">
+    {projects.map((project) => (
+      <ProjectCard
+        slug={project.slug}
+        title={project.data.title}
+        description={project.data.description}
+        techStack={project.data.techStack}
+        status={project.data.status}
+      />
+    ))}
+  </div>
+</BaseLayout>

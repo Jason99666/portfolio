@@ -1,0 +1,25 @@
+---
+interface Skill {
+  name: string;
+  level: number; // 1-5
+}
+
+interface Props {
+  skills: Skill[];
+}
+
+const { skills } = Astro.props;
+---
+
+<div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+  {skills.map((skill: Skill) => (
+    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+      <span style="font-size: 0.875rem; font-weight: 500; min-width: 100px;">{skill.name}</span>
+      <div style="flex: 1; height: 8px; background: var(--color-surface); border-radius: 9999px; overflow: hidden;">
+        <div
+          style={`width: ${skill.level * 20}%; height: 100%; background: var(--color-accent); border-radius: 9999px; transition: width 0.3s ease;`}
+        ></div>
+      </div>
+    </div>
+  ))}
+</div>

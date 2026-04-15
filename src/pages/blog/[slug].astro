@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((post) => !post.data.draft)
+    .map((post) => ({
+      params: { slug: post.slug },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const isExternal = !!post.data.externalUrl;
+---
+
+{isExternal ? (
+  <BaseLayout title={`${post.data.title} - 梁啸雨`} description={post.data.excerpt}>
+    <div style="max-width: 720px; text-align: center; padding: var(--spacing-3xl) 0;">
+      <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: var(--spacing-md);">{post.data.title}</h1>
+      <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: var(--spacing-xl);">
+        本文首发于微信公众号「碳基手记」
+      </p>
+      <a
+        href={post.data.externalUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-primary"
+      >
+        在微信中阅读完整文章 &rarr;
+      </a>
+      <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin-top: var(--spacing-lg);">
+        如未跳转，请复制链接到浏览器打开
+      </p>
+      <p style="font-size: 0.7rem; color: var(--color-text-secondary); margin-top: var(--spacing-sm); word-break: break-all; max-width: 480px; margin-left: auto; margin-right: auto; opacity: 0.6;">
+        {post.data.externalUrl}
+      </p>
+      <a href="/blog" style="font-size: 0.875rem; color: var(--color-text-secondary); display: inline-block; margin-top: var(--spacing-xl); text-decoration: none;">
+        &larr; 返回文章列表
+      </a>
+    </div>
+  </BaseLayout>
+) : (
+  <BaseLayout title={`${post.data.title} - 梁啸雨`} description={post.data.excerpt}>
+    <a href="/blog" style="font-size: 0.875rem; color: var(--color-text-secondary); display: inline-flex; align-items: center; gap: var(--spacing-xs); margin-bottom: var(--spacing-xl); text-decoration: none;">
+      &larr; 返回文章列表
+    </a>
+
+    <article style="max-width: 720px;">
+      <header style="margin-bottom: var(--spacing-2xl);">
+        <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: var(--spacing-sm);">{post.data.title}</h1>
+        <time style="font-size: 0.875rem; color: var(--color-text-secondary);">
+          {post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        {post.data.tags && (
+          <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-xs); margin-top: var(--spacing-md);">
+            {post.data.tags.map((tag: string) => (
+              <span style="font-size: 0.75rem; padding: 0.125rem 0.5rem; background: var(--color-surface); color: var(--color-text-secondary); border-radius: 9999px; border: 1px solid var(--color-border);">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div class="prose">
+        {await post.render().then(r => r.Content)}
+      </div>
+    </article>
+  </BaseLayout>
+)}

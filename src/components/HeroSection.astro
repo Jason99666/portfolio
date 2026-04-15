@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const topProjects = projects.slice(0, 3);
+---
+
+<section style="text-align: center; padding: var(--spacing-3xl) 0 var(--spacing-2xl);">
+  <h1 style="font-size: 2.25rem; font-weight: 700; margin-bottom: var(--spacing-md); letter-spacing: -0.025em;">
+    梁啸雨
+  </h1>
+  <p style="font-size: 1.125rem; color: var(--color-accent); font-weight: 500; margin-bottom: var(--spacing-xl);">
+    全面拥抱AI
+  </p>
+  <p style="font-size: 1rem; color: var(--color-text-secondary); max-width: 640px; margin: 0 auto var(--spacing-md); line-height: 1.7;">
+    在信息不完整、环境快速变化的条件下，用结构化方法识别什么是真需求。
+  </p>
+  <p style="font-size: 1rem; color: var(--color-text-secondary); max-width: 640px; margin: 0 auto var(--spacing-md); line-height: 1.7;">
+    作为 Project Owner 推动复杂项目落地。
+  </p>
+  <p style="font-size: 1rem; color: var(--color-text-secondary); max-width: 640px; margin: 0 auto var(--spacing-md); line-height: 1.7;">
+    亲手构建 AI 产品。
+  </p>
+  <p style="font-size: 1rem; color: var(--color-text); max-width: 640px; margin: 0 auto var(--spacing-xl); line-height: 1.7; font-style: italic;">
+    产品层以意图替代指令，技术层以智能替代规则
+  </p>
+  <div style="display: flex; gap: var(--spacing-md); justify-content: center;">
+    <a href="/projects" class="btn btn-primary">查看项目</a>
+    <a href="/about" class="btn btn-outline">关于我</a>
+  </div>
+</section>
+
+<section style="padding: var(--spacing-2xl) 0;">
+  <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: var(--spacing-xl); color: var(--color-text);">
+    精选项目
+  </h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--spacing-lg);">
+    {topProjects.map((project) => (
+      <a href={`/projects/${project.slug}`} style="text-decoration: none; color: inherit;">
+        <div style="background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--spacing-lg); transition: box-shadow 0.2s ease, transform 0.2s ease;"
+          onmouseover="this.style.boxShadow='var(--shadow-md)'; this.style.transform='translateY(-2px)'"
+          onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'"
+        >
+          <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-md);">
+            <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0;">{project.data.title}</h3>
+            <span style={`font-size: 0.7rem; padding: 0.125rem 0.5rem; border-radius: 9999px; font-weight: 500; ${project.data.status === '已开源' ? 'background: #ecfdf5; color: var(--color-success);' : 'background: #fffbeb; color: var(--color-warning);'}`}>
+              {project.data.status}
+            </span>
+          </div>
+          <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: var(--spacing-md); line-height: 1.6;">
+            {project.data.description}
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-xs);">
+            {project.data.techStack.slice(0, 4).map((tech: string) => (
+              <span style="font-size: 0.75rem; padding: 0.125rem 0.5rem; background: var(--color-surface); color: var(--color-text-secondary); border-radius: 9999px; border: 1px solid var(--color-border);">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

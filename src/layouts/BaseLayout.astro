@@ -1,0 +1,25 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <body>
+    <BaseHead {title} {description} />
+    <Header />
+    <main class="container" style="padding-top: 5rem; padding-bottom: 4rem; min-height: calc(100vh - 200px);">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

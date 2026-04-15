@@ -1,0 +1,35 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  techStack: string[];
+  status: '已开源' | '开发中';
+}
+
+const { slug, title, description, techStack, status } = Astro.props;
+---
+
+<a href={`/projects/${slug}`} style="text-decoration: none; color: inherit; display: block;">
+  <article style="background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--spacing-lg); transition: box-shadow 0.2s ease, transform 0.2s ease;"
+    onmouseover="this.style.boxShadow='var(--shadow-md)'; this.style.transform='translateY(-2px)'"
+    onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'"
+  >
+    <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-md); flex-wrap: nowrap;">
+      <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{title}</h3>
+      <span style={`font-size: 0.7rem; padding: 0.125rem 0.5rem; border-radius: 9999px; font-weight: 500; white-space: nowrap; flex-shrink: 0; ${status === '已开源' ? 'background: #ecfdf5; color: var(--color-success);' : 'background: #fffbeb; color: var(--color-warning);'}`}>
+        {status}
+      </span>
+    </div>
+    <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: var(--spacing-md); line-height: 1.6;">
+      {description}
+    </p>
+    <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-xs);">
+      {techStack.map((tech: string) => (
+        <span style="font-size: 0.75rem; padding: 0.125rem 0.5rem; background: var(--color-surface); color: var(--color-text-secondary); border-radius: 9999px; border: 1px solid var(--color-border);">
+          {tech}
+        </span>
+      ))}
+    </div>
+  </article>
+</a>

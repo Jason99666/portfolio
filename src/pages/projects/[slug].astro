@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<BaseLayout title={`${project.data.title} - 梁啸雨`} description={project.data.description}>
+  <a href="/projects" style="font-size: 0.875rem; color: var(--color-text-secondary); display: inline-flex; align-items: center; gap: var(--spacing-xs); margin-bottom: var(--spacing-xl); text-decoration: none;">
+    &larr; 返回项目列表
+  </a>
+
+  <article style="max-width: 720px;">
+    <header style="margin-bottom: var(--spacing-2xl);">
+      <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-md); flex-wrap: nowrap;">
+        <h1 style="font-size: 1.75rem; font-weight: 700; min-width: 0;">{project.data.title}</h1>
+        <span style={`font-size: 0.75rem; padding: 0.125rem 0.625rem; border-radius: 9999px; font-weight: 500; white-space: nowrap; ${project.data.status === '已开源' ? 'background: #ecfdf5; color: var(--color-success);' : 'background: #fffbeb; color: var(--color-warning);'}`}>
+          {project.data.status}
+        </span>
+      </div>
+      <p style="font-size: 1rem; color: var(--color-text-secondary); line-height: 1.6;">{project.data.description}</p>
+
+      <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-xs); margin-top: var(--spacing-md);">
+        {project.data.techStack.map((tech: string) => (
+          <span style="font-size: 0.75rem; padding: 0.125rem 0.5rem; background: var(--color-surface); color: var(--color-text-secondary); border-radius: 9999px; border: 1px solid var(--color-border);">
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      <div style="display: flex; gap: var(--spacing-md); margin-top: var(--spacing-lg);">
+        {project.data.github && (
+          <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="font-size: 0.8rem;">
+            GitHub
+          </a>
+        )}
+        {project.data.demo && (
+          <a href={project.data.demo} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="font-size: 0.8rem;">
+            在线演示
+          </a>
+        )}
+      </div>
+    </header>
+
+    {project.data.metrics && (
+      <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--spacing-lg); margin-bottom: var(--spacing-2xl);">
+        <h3 style="font-size: 0.875rem; font-weight: 600; margin-bottom: var(--spacing-md); color: var(--color-accent);">关键指标</h3>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          {project.data.metrics.map((metric: string) => (
+            <li style="font-size: 0.875rem; color: var(--color-text-secondary); padding: var(--spacing-xs) 0; padding-left: var(--spacing-md); position: relative;">
+              <span style="position: absolute; left: 0; color: var(--color-accent);">&#8226;</span>
+              {metric}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
